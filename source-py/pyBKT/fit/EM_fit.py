@@ -96,7 +96,7 @@ def run(data, model, trans_softcounts, emission_softcounts, init_softcounts, num
              'num_resources': num_resources, 'num_subparts': num_subparts, \
              'alldata': alldata, 'normalizeLengths': normalizeLengths, 'alpha_out': alpha_out}
 
-    num_threads = cpu_count() if parallel else 1
+    num_threads = int(np.ceil(cpu_count() / 4)) if parallel else 1
     thread_counts = [None for i in range(num_threads)]
     for thread_num in range(num_threads):
         blocklen = 1 + ((num_sequences - 1) // num_threads)
